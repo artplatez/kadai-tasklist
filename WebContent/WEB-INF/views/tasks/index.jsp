@@ -9,18 +9,18 @@
 			</c:if>
 		<h2>タスク一覧</h2>
 		<ul>
-			<c:forEach var="tasks" items="${tasks }">
+			<c:forEach var="task" items="${task }">
 			<li>
-				<a href="${pageContext.request.contextPath}/show?id=${tasks.id}">
-					<c:out value="${tasks.id}" />
+				<a href="${pageContext.request.contextPath}/show?id=${task.id}">
+					<c:out value="${task.id}" />
 					</a>
-					 :<c:out value="${tasks.content}" />
+					 :<c:out value="${task.content}" />
 					</li>
 					 </c:forEach>
 					 </ul>
 					<div id="pagination">
-						(全 ${tasks_count} 件)<br/>
-						<c:forEach var="i" begin="1" end="${((tasks_count - 1) /15) +1 }" step="1">
+						(全 ${task_count} 件)<br/>
+						<c:forEach var="i" begin="1" end="${((task_count - 1) /15) +1 }" step="1">
 							<c:choose>
 								<c:when test="${i == page }">
 									<c:out value="${i }"/>&nbsp;

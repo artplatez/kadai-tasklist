@@ -28,7 +28,6 @@ public class UpdateServlet extends HttpServlet {
      */
     public UpdateServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -41,6 +40,8 @@ public class UpdateServlet extends HttpServlet {
 
 			Task t = em.find(Task.class, (Integer)(request.getSession().getAttribute("task_id")));
 
+			String content = request.getParameter ("content");
+			t.setContent(content);
 
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 			t.setUpdated_at(currentTime);
@@ -53,7 +54,7 @@ public class UpdateServlet extends HttpServlet {
             	request.setAttribute("task", t);
             	request.setAttribute("errors", errors);
 
-            	RequestDispatcher rd= request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
+            	RequestDispatcher rd= request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
             	rd.forward(request, response);
             } else {
             	em.getTransaction().begin();
@@ -62,19 +63,8 @@ public class UpdateServlet extends HttpServlet {
             	em.close();
 
             	request.getSession().removeAttribute("task_id");
-
-            	response.sendRedirect(request.getContextPath() + "/index");
             }
-
-			em.getTransaction().begin();
-			em.getTransaction().commit();
-            request.getSession().setAttribute("flush", "登録が完了しました。");
-			em.close();
-
-			request.getSession().removeAttribute("task_id");
-
-			response.sendRedirect(request.getContextPath()+"/index");
-
+            	response.sendRedirect(request.getContextPath() + "/index");
 
 		}
 	}
